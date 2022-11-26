@@ -18,10 +18,10 @@ const dbPassword = process.env.MONGODB_PASSWORD;
 
 const mongoURL = `mongodb+srv://${dbUser}:${dbPassword}@cluster0.f0vll.mongodb.net/Users?retryWrites=true&w=majority`;
 
-mongoose
-  .connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then((res) => console.log("Connection success"))
-  .catch((e) => console.log(e));
+// mongoose
+//   .connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
+//   .then((res) => console.log("Connection success"))
+//   .catch((e) => console.log(e));
 
 app.get("/", (req, res, next) => {
   User.find({})
@@ -68,6 +68,12 @@ app.delete("/", (req, res, next) => {
   User.findOneAndDelete({ userName: userName })
     .then((result) => res.status(200).send(result))
     .catch((e) => console.log(e));
+});
+
+app.head("/", (req, res, next) => {
+  console.log("inside head");
+  console.log(req.headers);
+  res.status(200).send(req.headers);
 });
 
 app.listen(6061, () => {
